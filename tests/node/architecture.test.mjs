@@ -53,3 +53,11 @@ test('global stylesheet enables Tailwind utilities and brand tokens',()=>{
   assert.match(css,/\.page-shell/)
   assert.match(css,/\.surface/)
 })
+
+test('admin shell exposes full navigation on mobile',()=>{
+  const shell=read('src/components/app-shell/AdminShell.tsx')
+  assert.match(shell,/aria-label="تنقل الإدارة على الجوال"/)
+  for(const route of ['/admin/tasks','/admin/timeline','/admin/payments','/admin/updates','/admin/settings']){
+    assert.match(shell,new RegExp(route.replaceAll('/','\\/')))
+  }
+})
