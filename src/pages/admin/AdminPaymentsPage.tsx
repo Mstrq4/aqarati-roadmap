@@ -1,0 +1,6 @@
+import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
+import { PaymentCard } from '@/components/payments/PaymentCard'
+import { useRoadmap } from '@/features/roadmap/roadmap.queries'
+import { useRoadmapMutations } from '@/features/roadmap/roadmap.mutations'
+import type { Payment } from '@/features/roadmap/roadmap.types'
+export default function AdminPaymentsPage(){const {data}=useRoadmap();const {payment}=useRoadmapMutations();if(!data)return null;return <><AdminPageHeader title="إدارة الدفعات" description="حالة الدفعة تظهر للعميل، دون تنفيذ أي دفع مالي من هذه المنصة."/><div className="grid gap-5 lg:grid-cols-3">{data.payments.map(p=><div key={p.id}><PaymentCard payment={p}/><select value={p.status} onChange={e=>payment.mutate({id:p.id,patch:{status:e.target.value as Payment['status'],paid_at:e.target.value==='paid'?new Date().toISOString():null}})} className="mt-2 min-h-11 w-full rounded-xl border bg-card px-3"><option value="pending">قادمة</option><option value="due">مستحقة</option><option value="paid">مدفوعة</option></select></div>)}</div></>}

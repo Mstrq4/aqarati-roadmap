@@ -1,0 +1,5 @@
+import { Database,Palette,ShieldCheck } from 'lucide-react'
+import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
+import { supabaseConfigured } from '@/lib/supabase'
+export default function AdminSettingsPage(){return <><AdminPageHeader title="الإعدادات" description="إعدادات العرض والاتصال الأساسية."/><div className="grid gap-4 lg:grid-cols-3"><Box icon={Database} title="Supabase" text={supabaseConfigured?'متصل عبر متغيرات البيئة.':'غير متصل — أضف VITE_SUPABASE_URL و VITE_SUPABASE_PUBLISHABLE_KEY.'}/><Box icon={Palette} title="الهوية" text="Deep Amethyst #3E1848 + Whisper Lavender #E7E6F5 + خط ثمانية Serif Display."/><Box icon={ShieldCheck} title="الوصول" text="العرض العام بلا تسجيل دخول؛ الإدارة تتطلب Supabase Auth وسياسات RLS."/></div></>}
+function Box({icon:Icon,title,text}:any){return <article className="surface rounded-2xl p-5"><Icon className="h-5 w-5 text-primary"/><h2 className="mt-4 font-black">{title}</h2><p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p></article>}
