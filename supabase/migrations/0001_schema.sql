@@ -10,7 +10,7 @@ create table public.projects (
   id uuid primary key default gen_random_uuid(), slug text not null unique, name text not null, description text not null default '', start_date date,
   target_weeks smallint not null default 10 check (target_weeks between 1 and 12), max_weeks smallint not null default 12 check (max_weeks between 1 and 12 and max_weeks >= target_weeks),
   total_amount numeric(12,2) not null default 7800 check (total_amount >= 0), currency text not null default 'SAR', overall_progress smallint not null default 0 check (overall_progress between 0 and 100),
-  current_week smallint not null default 1 check (current_week between 1 and 12), updated_at timestamptz not null default now()
+  current_week smallint not null default 0 check (current_week between 0 and 12), updated_at timestamptz not null default now()
 );
 create table public.phases (
   id uuid primary key default gen_random_uuid(), project_id uuid not null references public.projects(id) on delete cascade, name text not null, description text not null default '',

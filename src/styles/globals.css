@@ -13,7 +13,9 @@
   .dark{--background:288 25% 8%;--foreground:286 23% 95%;--card:288 24% 11%;--card-foreground:286 23% 95%;--primary:244 43% 93%;--primary-foreground:288 50% 19%;--secondary:288 24% 18%;--secondary-foreground:286 23% 95%;--muted:288 20% 17%;--muted-foreground:287 10% 70%;--accent:288 24% 18%;--accent-foreground:286 23% 95%;--destructive:4 61% 48%;--destructive-foreground:0 0% 100%;--border:289 20% 21%;--input:289 20% 21%;--ring:244 43% 78%;--success:158 55% 52%;--warning:38 83% 55%}
   *{@apply border-border}
   html{direction:rtl;scroll-behavior:smooth}
-  body{@apply min-w-[320px] bg-background text-foreground antialiased;margin:0;font-family:'Thmanyah Serif Display',Tahoma,serif;font-size:16px;line-height:1.65}
+  body{@apply min-w-[320px] bg-background text-foreground antialiased;margin:0;font-family:'Thmanyah Serif Display',Tahoma,serif;font-size:16px;line-height:1.8}
+  p{line-height:1.9}
+  h1,h2,h3{line-height:1.35}
   button,input,select,textarea{font:inherit}
   button,a,input,select{min-height:44px}
   :focus-visible{@apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background}
