@@ -21,5 +21,5 @@ export function PublicShell(){return <div className="min-h-screen bg-background"
   <nav className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-6 gap-1 rounded-2xl border border-border bg-card/95 p-1.5 shadow-xl backdrop-blur lg:hidden" aria-label="التنقل على الجوال">
     {items.map(([to,label,Icon])=><NavLink key={to} to={to} end={to==='/'} className={({isActive})=>cn('flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-xl text-[10px]',isActive?'bg-primary text-primary-foreground':'text-muted-foreground')}><Icon className="h-4 w-4"/><span className="truncate">{label}</span></NavLink>)}
   </nav>
-  <footer className="mt-16 border-t border-border py-8 pb-24 lg:pb-8"><div className="page-shell flex flex-col gap-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between"><span>عقاراتي — متابعة تنفيذ المشروع</span><span>عرض مباشر للعميل • آخر البيانات تظهر تلقائيًا</span></div></footer>
+  <footer className="mt-16 border-t border-border py-8 pb-24 lg:pb-8"><div className="page-shell flex flex-col gap-3 text-sm leading-7 text-muted-foreground sm:flex-row sm:items-center sm:justify-between"><span>عقاراتي — متابعة تنفيذ المشروع</span><span>تتحدث البيانات تلقائيًا حسب التقدم المسجل</span></div></footer>
 </div>}
