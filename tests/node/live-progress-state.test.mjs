@@ -17,8 +17,8 @@ test('preview seed starts at a true zero state',()=>{
 })
 
 test('database seed also starts with no fabricated progress',()=>{
-  const schema=read('supabase/migrations/0001_schema.sql')
-  const seed=read('supabase/migrations/0003_seed.sql')
+  const schema=read('supabase/migrations/20260831010000_schema.sql')
+  const seed=read('supabase/migrations/20260831010200_seed.sql')
   assert.match(schema,/current_week smallint not null default 0 check \(current_week between 0 and 12\)/)
   assert.match(seed,/,7800,'SAR',0,0\)/)
   assert.doesNotMatch(seed,/,'(?:done|active|review)'/)
@@ -28,7 +28,7 @@ test('database seed also starts with no fabricated progress',()=>{
 })
 
 test('task changes drive database phase and project progress',()=>{
-  const migration=read('supabase/migrations/0004_derived_progress.sql')
+  const migration=read('supabase/migrations/20260831010300_derived_progress.sql')
   assert.match(migration,/create trigger tasks_sync_progress_insert_delete\s+after insert or delete on public\.tasks/i)
   assert.match(migration,/create trigger tasks_sync_progress_update\s+after update of progress,status,phase_id on public\.tasks/i)
   assert.match(migration,/recalculate_phase_progress/)
