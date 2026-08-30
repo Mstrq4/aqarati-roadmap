@@ -61,8 +61,12 @@ begin
 end;
 $$;
 
-create trigger tasks_sync_progress
-after insert or update of progress,status,phase_id or delete on public.tasks
+create trigger tasks_sync_progress_insert_delete
+after insert or delete on public.tasks
+for each row execute function public.sync_progress_from_tasks();
+
+create trigger tasks_sync_progress_update
+after update of progress,status,phase_id on public.tasks
 for each row execute function public.sync_progress_from_tasks();
 
 select public.recalculate_phase_progress(id) from public.phases;
