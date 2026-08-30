@@ -1,9 +1,9 @@
 import { NavLink,Outlet,Link,useNavigate } from 'react-router-dom'
-import { LayoutDashboard,ListChecks,CalendarRange,CreditCard,History,Settings,LogOut,ExternalLink } from 'lucide-react'
+import { LayoutDashboard,ListChecks,CalendarRange,CreditCard,FileCheck2,History,Settings,LogOut,ExternalLink } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 import { supabase } from '@/lib/supabase'
 import { cn } from '@/lib/cn'
-const nav=[['/admin','لوحة الإدارة',LayoutDashboard],['/admin/tasks','المهام',ListChecks],['/admin/timeline','الخطة الزمنية',CalendarRange],['/admin/payments','الدفعات',CreditCard],['/admin/updates','التحديثات',History],['/admin/settings','الإعدادات',Settings]] as const
+const nav=[['/admin','لوحة الإدارة',LayoutDashboard],['/admin/tasks','المهام',ListChecks],['/admin/timeline','الخطة الزمنية',CalendarRange],['/admin/payments','الدفعات',CreditCard],['/admin/deliverables','التسليمات',FileCheck2],['/admin/updates','التحديثات',History],['/admin/settings','الإعدادات',Settings]] as const
 export function AdminShell(){const navigate=useNavigate(); const signout=async()=>{await supabase?.auth.signOut();navigate('/login')}; return <div className="min-h-screen bg-muted/30 lg:grid lg:grid-cols-[260px_1fr]">
 <aside className="hidden border-l border-border bg-card lg:flex lg:min-h-screen lg:flex-col lg:p-4">
  <Link to="/admin" className="mb-7 flex min-h-12 items-center gap-3 rounded-xl px-2"><span className="grid h-10 w-10 place-items-center rounded-xl bg-primary text-primary-foreground font-black">ع</span><span><b className="block">إدارة عقاراتي</b><small className="text-muted-foreground">لوحة المالك</small></span></Link>
