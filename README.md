@@ -15,4 +15,8 @@ npm run dev
 - Vercel: استخدم `main`
 - Supabase: طبّق ملفات `supabase/migrations/` ثم أضف `VITE_SUPABASE_URL` و`VITE_SUPABASE_PUBLISHABLE_KEY`.
 
+## التحقق
+
+كل Push إلى `main` يشغّل GitHub Actions لاختبار المنطق وبناء نسخة الإنتاج.
+
 الخطة: 10 أسابيع تنفيذ + أسبوعان UAT/قبول كحد أقصى. القيمة: 7,800 SAR موزعة 40% / 30% / 30%.
