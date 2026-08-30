@@ -1,8 +1,8 @@
 import { seedData } from './seed'
 import { supabase, supabaseConfigured } from '@/lib/supabase'
-import type { RoadmapData, RoadmapTask, Payment, Phase, ProjectUpdate } from './roadmap.types'
+import type { RoadmapData, RoadmapTask, Payment, Phase, ProjectUpdate, Project, Deliverable, Milestone } from './roadmap.types'
 
-const LOCAL_KEY='aqarati-roadmap-preview-data'
+const LOCAL_KEY='aqarati-roadmap-preview-data-v2'
 const cloneSeed=()=>JSON.parse(JSON.stringify(seedData)) as RoadmapData
 function readLocal(){ try { const raw=localStorage.getItem(LOCAL_KEY); return raw? JSON.parse(raw) as RoadmapData:cloneSeed() } catch { return cloneSeed() } }
 function writeLocal(data:RoadmapData){ localStorage.setItem(LOCAL_KEY,JSON.stringify(data)); return data }
@@ -23,6 +23,10 @@ export async function fetchRoadmap():Promise<RoadmapData>{
   return {project,phases:phases??[],tasks:tasks??[],milestones:milestones??[],payments:payments??[],deliverables:deliverables??[],updates:updates??[]}
 }
 
+export async function updateProject(id:string,patch:Partial<Project>){
+  if(!supabaseConfigured||!supabase){const d=readLocal(); d.project=d.project.id===id?{...d.project,...patch}:d.project; return writeLocal(d).project}
+  const {data,error}=await supabase.from('projects').update(patch).eq('id',id).select().single(); if(error)throw error; return data
+}
 export async function updateTask(id:string,patch:Partial<RoadmapTask>){
   if(!supabaseConfigured||!supabase){const d=readLocal(); d.tasks=d.tasks.map(t=>t.id===id?{...t,...patch}:t); return writeLocal(d).tasks.find(t=>t.id===id)!}
   const {data,error}=await supabase.from('tasks').update({...patch,updated_at:new Date().toISOString()}).eq('id',id).select().single(); if(error)throw error; return data
@@ -34,6 +38,14 @@ export async function updatePhase(id:string,patch:Partial<Phase>){
 export async function updatePayment(id:string,patch:Partial<Payment>){
   if(!supabaseConfigured||!supabase){const d=readLocal(); d.payments=d.payments.map(t=>t.id===id?{...t,...patch}:t); return writeLocal(d).payments.find(t=>t.id===id)!}
   const {data,error}=await supabase.from('payments').update(patch).eq('id',id).select().single(); if(error)throw error; return data
+}
+export async function updateMilestone(id:string,patch:Partial<Milestone>){
+  if(!supabaseConfigured||!supabase){const d=readLocal(); d.milestones=d.milestones.map(t=>t.id===id?{...t,...patch}:t); return writeLocal(d).milestones.find(t=>t.id===id)!}
+  const {data,error}=await supabase.from('milestones').update(patch).eq('id',id).select().single(); if(error)throw error; return data
+}
+export async function updateDeliverable(id:string,patch:Partial<Deliverable>){
+  if(!supabaseConfigured||!supabase){const d=readLocal(); d.deliverables=d.deliverables.map(t=>t.id===id?{...t,...patch}:t); return writeLocal(d).deliverables.find(t=>t.id===id)!}
+  const {data,error}=await supabase.from('deliverables').update(patch).eq('id',id).select().single(); if(error)throw error; return data
 }
 export async function createUpdate(input:Pick<ProjectUpdate,'title'|'body'>){
   const row={project_id:seedData.project.id,title:input.title,body:input.body,published:true,related_phase_id:null}
