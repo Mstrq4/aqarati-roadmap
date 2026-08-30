@@ -27,6 +27,14 @@ test('database seed also starts with no fabricated progress',()=>{
   assert.doesNotMatch(seed,/insert into public\.updates/)
 })
 
+test('task changes drive database phase and project progress',()=>{
+  const migration=read('supabase/migrations/0004_derived_progress.sql')
+  assert.match(migration,/create trigger tasks_sync_progress_insert_delete\s+after insert or delete on public\.tasks/i)
+  assert.match(migration,/create trigger tasks_sync_progress_update\s+after update of progress,status,phase_id on public\.tasks/i)
+  assert.match(migration,/recalculate_phase_progress/)
+  assert.match(migration,/recalculate_project_progress/)
+})
+
 test('dashboard derives statistics instead of trusting stored overall progress',()=>{
   assert.ok(exists('src/features/roadmap/roadmap.metrics.ts'),'missing derived metrics module')
   const dashboard=read('src/pages/public/DashboardPage.tsx')
@@ -67,7 +75,7 @@ test('admin can control every live roadmap data group',()=>{
   assert.match(mutations,/project:/)
   assert.match(mutations,/deliverable:/)
   assert.match(mutations,/milestone:/)
-  assert.match(router,/admin\/deliverables/)
+  assert.match(router,/path:'deliverables',element:<AdminDeliverablesPage\/>/)
   assert.match(shell,/admin\/deliverables/)
   assert.match(settings,/تاريخ بدء المشروع/)
 })
