@@ -74,7 +74,7 @@ test('admin tasks timeline payments and deliverables expose management affordanc
   assert.match(tasks,/جدول|قائمة/)
   const timeline=read('src/pages/admin/AdminTimelinePage.tsx')
   assert.match(timeline,/إضافة مرحلة/)
-  assert.match(timeline,/معجم المصطلحات/)
+  assert.match(timeline,/GlossaryPanel/)
   const payments=read('src/pages/admin/AdminPaymentsPage.tsx')
   assert.match(payments,/إضافة دفعة/)
   for(const token of ['amount','percentage','trigger_title','due_date','notes']) assert.match(payments,new RegExp(token))
