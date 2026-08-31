@@ -3,17 +3,24 @@ set description='خارطة تنفيذ تفاعلية لمشروع عقارات�
 where slug='aqarati-roadmap';
 
 update public.phases set
-  name='تجربة الويب وتطبيق React Native',
-  description='نظام تصميم عربي RTL، منصة الويب SaaS، وتجربة تطبيق الهاتف الأصلي على Android وiOS.'
+  name='تجربة الويب SaaS ونظام التصميم',
+  description='تصميم منصة الويب العربية RTL، لوحة المعلومات، التهيئة، تجربة العميل والإدارة، والوضعين الليلي والنهاري.'
 where id='20000000-0000-4000-8000-000000000002';
+
+update public.phases set sort_order=sort_order+1
+where project_id='11111111-1111-4111-8111-111111111111' and sort_order>=3;
+
+insert into public.phases (id,project_id,name,description,start_week,end_week,progress,status,sort_order,is_public)
+values ('20000000-0000-4000-8000-000000000012','11111111-1111-4111-8111-111111111111','تطبيق الهاتف React Native','مسار مستقل لبناء تطبيق Android وiOS فعلي: البنية، التنقل، المصادقة، شاشات العقارات والباحثين، Deep Linking، Push Notifications واختبارات المنصتين.',2,10,0,'planned',3,true)
+on conflict (id) do update set name=excluded.name,description=excluded.description,start_week=excluded.start_week,end_week=excluded.end_week,sort_order=excluded.sort_order,is_public=excluded.is_public;
 
 update public.phases set description='Supabase، المصادقة، RLS، Realtime، ربط تطبيق React Native، النشر والمراقبة وسياسات الخصوصية.' where id='20000000-0000-4000-8000-000000000003';
 update public.phases set description='العقارات والصور والحالات والبحث والوسوم والمفضلة وبيانات الملاك الاحتياطية عبر الويب وتطبيق الهاتف.' where id='20000000-0000-4000-8000-000000000004';
 update public.phases set description='Saved Search وتنبيهات فرص الباحثين Pro وPush Notifications على تطبيق الهاتف.' where id='20000000-0000-4000-8000-000000000009';
 update public.phases set description='اختبارات E2E والأمان والأداء، اختبار Android وiOS، Release Candidate والتسليم النهائي.' where id='20000000-0000-4000-8000-000000000011';
 
-update public.tasks set title='نظام التصميم العربي RTL للويب وتطبيق React Native', description='توحيد الألوان والخطوط والمكونات وحالات الخطأ والتحميل والوضع الليلي بين منصة الويب وتطبيق الهاتف.', owner_label='Frontend / Mobile' where title='Design System عربي RTL والوضع الليلي';
-update public.tasks set title='Onboarding وشاشة التهيئة للويب وتطبيق الهاتف', description='تصميم خطوات البداية التي تشرح المنتج والباقات والمزايا وتساعد المستخدم على تجهيز حسابه لأول استخدام.', owner_label='Frontend / Mobile' where title='Onboarding وشاشة التهيئة';
+update public.tasks set title='نظام التصميم العربي RTL للويب', description='توحيد الألوان والخطوط والمكونات وحالات الخطأ والتحميل والوضع الليلي لمنصة الويب ولوحة الإدارة والعرض العام.', owner_label='Frontend / Product' where title='Design System عربي RTL والوضع الليلي';
+update public.tasks set title='Onboarding وشاشة التهيئة للويب', description='تصميم خطوات البداية في منصة الويب لشرح المنتج والباقات والمزايا ومساعدة المستخدم على تجهيز حسابه.', owner_label='Frontend / Product' where title='Onboarding وشاشة التهيئة';
 update public.tasks set description='إنشاء نموذج البيانات والمصادقة وسياسات الوصول على مستوى الصفوف والتحديثات اللحظية بين لوحة الإدارة والعرض والأجهزة.', owner_label='Backend' where title='تهيئة Supabase وRLS وRealtime';
 update public.tasks set description='تمكين إضافة العقار وعرضه وتعديله وحذفه وإدارة الصور والحالة والظهور من الويب والتطبيق.', owner_label='Backend / Frontend' where title='CRUD العقارات والصور والحالات';
 update public.tasks set description='بناء بحث عملي بالعقار مع الفلاتر والوسوم والمفضلة بحيث تعمل التجربة بنفس المنطق على الويب وتطبيق الهاتف.', owner_label='Frontend / Mobile' where title='البحث والفلاتر والوسوم والمفضلة';
@@ -25,15 +32,15 @@ update public.tasks set description='اختبار الرحلات الرئيسي�
 update public.tasks set description='إصدار نسخة مرشحة للإطلاق، تنفيذ فحص القبول، تسليم المستودع وبيئة الإنتاج والتوثيق التشغيلي.', owner_label='Product / QA' where title='Release Candidate والتسليم';
 
 insert into public.tasks (id,project_id,phase_id,title,description,week,progress,status,priority,owner_label,notes,is_public) values
-('30000000-0000-4000-8000-000000000019','11111111-1111-4111-8111-111111111111','20000000-0000-4000-8000-000000000002','تهيئة مشروع React Native وبنية التطبيق','إعداد تطبيق الهاتف الحقيقي بهيكل TypeScript حديث ومكونات أصلية وربطه بنظام التصميم المشترك مع الويب.',2,0,'planned','critical','Mobile','',true),
-('30000000-0000-4000-8000-000000000020','11111111-1111-4111-8111-111111111111','20000000-0000-4000-8000-000000000002','تنقل تطبيق الهاتف وDeep Linking','بناء التنقل بين الشاشات ومسارات فتح شاشة محددة من رابط مباشر داخل Android وiOS.',3,0,'planned','high','Mobile','',true),
-('30000000-0000-4000-8000-000000000021','11111111-1111-4111-8111-111111111111','20000000-0000-4000-8000-000000000003','مصادقة React Native وربط البيانات مع Supabase','ربط تسجيل الدخول والجلسة وقراءة وكتابة بيانات المستخدم من تطبيق الهاتف مع الالتزام بسياسات RLS.',3,0,'planned','critical','Mobile / Backend','',true),
-('30000000-0000-4000-8000-000000000022','11111111-1111-4111-8111-111111111111','20000000-0000-4000-8000-000000000004','شاشات العقارات والباحثين الأساسية في React Native','بناء شاشات الهاتف لإدارة العقارات وعرض التفاصيل والبحث وملفات الباحثين بالوظائف الأساسية المعتمدة.',5,0,'planned','high','Mobile','',true),
-('30000000-0000-4000-8000-000000000023','11111111-1111-4111-8111-111111111111','20000000-0000-4000-8000-000000000009','Push Notifications لتطبيق الهاتف','إرسال إشعارات الهاتف للفرص العقارية والتنبيهات المهمة مع فتح الشاشة الصحيحة عند الضغط على الإشعار.',8,0,'planned','high','Mobile / Backend','',true),
-('30000000-0000-4000-8000-000000000024','11111111-1111-4111-8111-111111111111','20000000-0000-4000-8000-000000000011','اختبار Android وiOS وتجهيز النسخة المرشحة','اختبار التطبيق على أجهزة Android وiOS فعلية، معالجة اختلافات المنصتين وتجهيز builds مرشحة للإطلاق والتسليم.',10,0,'planned','critical','Mobile / QA','',true)
-on conflict (id) do update set title=excluded.title,description=excluded.description,week=excluded.week,priority=excluded.priority,owner_label=excluded.owner_label,is_public=excluded.is_public;
+('30000000-0000-4000-8000-000000000019','11111111-1111-4111-8111-111111111111','20000000-0000-4000-8000-000000000012','تهيئة مشروع React Native وبنية التطبيق','إعداد تطبيق الهاتف الحقيقي بهيكل TypeScript حديث ومكونات أصلية وربطه بنظام التصميم المعتمد للمشروع.',2,0,'planned','critical','Mobile','',true),
+('30000000-0000-4000-8000-000000000020','11111111-1111-4111-8111-111111111111','20000000-0000-4000-8000-000000000012','تنقل تطبيق الهاتف وDeep Linking','بناء التنقل بين الشاشات ومسارات فتح شاشة محددة من رابط مباشر داخل Android وiOS.',3,0,'planned','high','Mobile','',true),
+('30000000-0000-4000-8000-000000000021','11111111-1111-4111-8111-111111111111','20000000-0000-4000-8000-000000000012','مصادقة React Native وربط البيانات مع Supabase','ربط تسجيل الدخول والجلسة وقراءة وكتابة بيانات المستخدم من تطبيق الهاتف مع الالتزام بسياسات RLS.',3,0,'planned','critical','Mobile / Backend','',true),
+('30000000-0000-4000-8000-000000000022','11111111-1111-4111-8111-111111111111','20000000-0000-4000-8000-000000000012','شاشات العقارات والباحثين الأساسية في React Native','بناء شاشات الهاتف لإدارة العقارات وعرض التفاصيل والبحث وملفات الباحثين بالوظائف الأساسية المعتمدة.',5,0,'planned','high','Mobile','',true),
+('30000000-0000-4000-8000-000000000023','11111111-1111-4111-8111-111111111111','20000000-0000-4000-8000-000000000012','Push Notifications لتطبيق الهاتف','إرسال إشعارات الهاتف للفرص العقارية والتنبيهات المهمة مع فتح الشاشة الصحيحة عند الضغط على الإشعار.',8,0,'planned','high','Mobile / Backend','',true),
+('30000000-0000-4000-8000-000000000024','11111111-1111-4111-8111-111111111111','20000000-0000-4000-8000-000000000012','اختبار Android وiOS وتجهيز النسخة المرشحة','اختبار التطبيق على أجهزة Android وiOS فعلية، معالجة اختلافات المنصتين وتجهيز builds مرشحة للإطلاق والتسليم.',10,0,'planned','critical','Mobile / QA','',true)
+on conflict (id) do update set phase_id=excluded.phase_id,title=excluded.title,description=excluded.description,week=excluded.week,priority=excluded.priority,owner_label=excluded.owner_label,is_public=excluded.is_public;
 
-update public.milestones set acceptance_summary='وظائف العقارات والباحثين والقروب الأساسية قابلة للاستعراض على الويب مع أساس تطبيق React Native.' where title='Alpha Core';
+update public.milestones set acceptance_summary='وظائف العقارات والباحثين والقروب الأساسية قابلة للاستعراض على الويب، مع نسخة React Native أساسية قابلة للاختبار.' where title='Alpha Core';
 update public.milestones set acceptance_summary='نسخة الويب ونسخة React Native المرشحتان للإطلاق تحققان معايير القبول الأساسية.' where title='Release Candidate';
 
 insert into public.deliverables (id,project_id,group_key,title,is_complete,sort_order) values
