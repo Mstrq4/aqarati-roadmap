@@ -1,0 +1,4 @@
+import { AlertTriangle } from 'lucide-react'
+import { EntityDialog } from './EntityDialog'
+
+export function ConfirmDialog({open,title,description,confirmLabel='حذف',busy=false,onCancel,onConfirm}:{open:boolean;title:string;description:string;confirmLabel?:string;busy?:boolean;onCancel:()=>void;onConfirm:()=>void}){return <EntityDialog open={open} title={title} description={description} onClose={onCancel}><div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end"><button type="button" onClick={onCancel} disabled={busy} className="min-h-11 rounded-xl border px-5 font-bold hover:bg-secondary disabled:opacity-50">إلغاء</button><button type="button" onClick={onConfirm} disabled={busy} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-destructive px-5 font-bold text-destructive-foreground disabled:opacity-50"><AlertTriangle className="h-4 w-4"/>{busy?'جارٍ التنفيذ...':confirmLabel}</button></div></EntityDialog>}
