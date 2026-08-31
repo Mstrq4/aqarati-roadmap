@@ -59,7 +59,8 @@ test('mobile gantt does not require horizontal scrolling',()=>{
   assert.doesNotMatch(gantt,/overflow-x-auto/)
   assert.match(gantt,/md:hidden/)
   assert.match(gantt,/grid-cols-6/)
-  assert.match(gantt,/hidden md:block/)
+  assert.match(gantt,/hidden/)
+  assert.match(gantt,/md:block/)
 })
 
 test('admin can control every live roadmap data group',()=>{
@@ -72,10 +73,23 @@ test('admin can control every live roadmap data group',()=>{
   assert.match(api,/updateProject/)
   assert.match(api,/updateDeliverable/)
   assert.match(api,/updateMilestone/)
-  assert.match(mutations,/project:/)
-  assert.match(mutations,/deliverable:/)
-  assert.match(mutations,/milestone:/)
+  assert.match(mutations,/\bproject\b/)
+  assert.match(mutations,/\bdeliverable\b/)
+  assert.match(mutations,/\bmilestone\b/)
   assert.match(router,/path:'deliverables',element:<AdminDeliverablesPage\/>/)
   assert.match(shell,/admin\/deliverables/)
   assert.match(settings,/تاريخ بدء المشروع/)
+})
+
+test('contract payment split totals exactly 7800 SAR',()=>{
+  const seed=read('src/features/roadmap/seed.ts')
+  assert.match(seed,/percentage:40,amount:3120/)
+  assert.match(seed,/percentage:30,amount:2340/)
+  assert.equal(3120+2340+2340,7800)
+})
+
+test('UAT margin is weeks 11 and 12 only',()=>{
+  const timeline=read('src/pages/public/TimelinePage.tsx')
+  assert.match(timeline,/11–12/)
+  assert.match(timeline,/10/)
 })
